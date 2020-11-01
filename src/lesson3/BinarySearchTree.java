@@ -215,7 +215,7 @@ public class BinarySearchTree<T extends Comparable<T>> extends AbstractSet<T> im
     public class BinarySearchTreeIterator implements Iterator<T> {
 
         private BinarySearchTreeIterator() {
-            // Добавьте сюда инициализацию, если она необходима.
+            next = findNext(null);
         }
 
         /**
@@ -275,7 +275,7 @@ public class BinarySearchTree<T extends Comparable<T>> extends AbstractSet<T> im
         @Override
         public void remove() {
             if (now == null) throw new IllegalStateException();
-            BinarySearchTree.this.delete(now);
+            BinarySearchTree.this.remove(now);
             now = null;
         }
     }
