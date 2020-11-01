@@ -201,8 +201,10 @@ public class BinarySearchTree<T extends Comparable<T>> extends AbstractSet<T> im
          */
         @Override
         public void remove() {
-            // TODO
-            throw new NotImplementedError();
+            if (now == null)
+                throw new IllegalStateException();
+            BinarySearchTree.this.remove(now.value);
+            now = null;
         }
     }
 
