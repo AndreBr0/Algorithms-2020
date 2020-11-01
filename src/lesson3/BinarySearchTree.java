@@ -13,8 +13,6 @@ public class BinarySearchTree<T extends Comparable<T>> extends AbstractSet<T> im
         Node<T> left = null;
         Node<T> right = null;
 
-        // переменная родителя
-
         Node<T> parent = null;
 
         Node(T value) {
@@ -113,51 +111,8 @@ public class BinarySearchTree<T extends Comparable<T>> extends AbstractSet<T> im
      */
     @Override
     public boolean remove(Object o) {
-        T value = (T) o;
-        Node<T> node = find(value);
-        return delete(node);
-    }
-    /*
-    Память: O(1)
-    Сложность: O(lgn)
-    */
-
-// Функция удаления Nod'а которая удаляет в дереве переданный объект
-
-    private boolean delete(Node<T> node) {
-        if (node == null) return false;
-        if (node.left == null) {
-            transplant(node, node.right);
-        } else if (node.right == null) {
-            transplant(node, node.left);
-        } else {
-            Node<T> y = node.right.minimum();
-            if (y.parent != node) {
-                transplant(y, y.right);
-                y.right = node.right;
-                y.right.parent = y;
-            }
-            transplant(node, y);
-            y.left = node.left;
-            y.left.parent = y;
-        }
-        size--;
-        return true;
-    }
-
-    // Функция трансплант, которая заменяет поддерево,являющееся дочернем по отношению к поддереву, другим родителем.
-
-    private void transplant(Node<T> to, Node<T> from) {
-        if (to.parent == null) {
-            root = from;
-        } else if (to.equals(to.parent.left)) {
-            to.parent.left = from;
-        } else {
-            to.parent.right = from;
-        }
-        if (from != null) {
-            from.parent = to.parent;
-        }
+        // TODO
+        throw new NotImplementedError();
     }
 
     @Nullable
@@ -173,6 +128,9 @@ public class BinarySearchTree<T extends Comparable<T>> extends AbstractSet<T> im
     }
 
     public class BinarySearchTreeIterator implements Iterator<T> {
+
+        private Node<T> next;
+        private Node<T> now = null;
 
         private BinarySearchTreeIterator() {
             // Добавьте сюда инициализацию, если она необходима.
@@ -209,8 +167,24 @@ public class BinarySearchTree<T extends Comparable<T>> extends AbstractSet<T> im
          */
         @Override
         public T next() {
-            // TODO
-            throw new NotImplementedError();
+            now = next;
+            if (now == null) throw new NoSuchElementException();
+            next = findNext(now);
+            return now.value;
+        }
+
+        private Node<T> findNext(Node<T> xpos) {
+            if (root == null) return null;
+            if (xpos == null) return root.minimum();
+            if (xpos.right != null) {
+                return xpos.right.minimum();
+            }
+            Node<T> ypos = xpos.parent;
+            while (ypos != null && xpos == ypos.right) {
+                xpos = ypos;
+                ypos = ypos.parent;
+            }
+            return ypos;
         }
 
         /**
