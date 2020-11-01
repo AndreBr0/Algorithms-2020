@@ -12,12 +12,15 @@ public class BinarySearchTree<T extends Comparable<T>> extends AbstractSet<T> im
         final T value;
         Node<T> left = null;
         Node<T> right = null;
+
         // переменная родителя
+
         Node<T> parent = null;
-        // Функция для нахождения минимального элемента в дереве
+
         Node(T value) {
             this.value = value;
         }
+
         Node<T> minimum() {
             Node<T> current = this;
             while (current.left != null) {
@@ -92,7 +95,6 @@ public class BinarySearchTree<T extends Comparable<T>> extends AbstractSet<T> im
         else {
             assert closest.right == null;
             closest.right = newNode;
-            newNode.parent = closest;
         }
         size++;
         return true;
@@ -120,7 +122,7 @@ public class BinarySearchTree<T extends Comparable<T>> extends AbstractSet<T> im
     Сложность: O(lgn)
     */
 
-    // Функция удаления Nod'а которая удаляет в дереве переданный объект
+// Функция удаления Nod'а которая удаляет в дереве переданный объект
 
     private boolean delete(Node<T> node) {
         if (node == null) return false;
@@ -158,45 +160,6 @@ public class BinarySearchTree<T extends Comparable<T>> extends AbstractSet<T> im
         }
     }
 
-
-//Поиск следущего элемента в дереве
-
-    private Node<T> findNext(Node<T> xpos) {
-        if (root == null) return null;
-        if (xpos == null) return root.minimum();
-        if (xpos.right != null) {
-            return xpos.right.minimum();
-        }
-        Node<T> ypos = xpos.parent;
-        while (ypos != null && xpos == ypos.right) {
-            xpos = ypos;
-            ypos = ypos.parent;
-        }
-        return ypos;
-    }
-
-
-    private Node<T> findNear(T value) {
-        if (root == null) return null;
-        return findNear(root, value);
-    }
-
-    private Node<T> findNear(Node<T> start, T value) {
-        int comparison = value.compareTo(start.value);
-        if (comparison == 0) {
-            return start;
-        }
-        else if (comparison < 0) {
-            if (start.left == null) return start;
-            return findNear(start.left, value);
-        }
-        else {
-            if (start.right == null) return start;
-            return findNear(start.right, value);
-        }
-    }
-
-
     @Nullable
     @Override
     public Comparator<? super T> comparator() {
@@ -209,13 +172,10 @@ public class BinarySearchTree<T extends Comparable<T>> extends AbstractSet<T> im
         return new BinarySearchTreeIterator();
     }
 
-    private Node<T> next;
-    private Node<T> now = null;
-
     public class BinarySearchTreeIterator implements Iterator<T> {
 
         private BinarySearchTreeIterator() {
-            next = findNext(null);
+            // Добавьте сюда инициализацию, если она необходима.
         }
 
         /**
@@ -230,11 +190,9 @@ public class BinarySearchTree<T extends Comparable<T>> extends AbstractSet<T> im
          */
         @Override
         public boolean hasNext() {
-            return next != null;
-
+            // TODO
+            throw new NotImplementedError();
         }
-        //   Память: O(1)
-        //   Сложность: O(1)
 
         /**
          * Получение следующего элемента
@@ -251,14 +209,9 @@ public class BinarySearchTree<T extends Comparable<T>> extends AbstractSet<T> im
          */
         @Override
         public T next() {
-            now = next;
-            if (now == null) throw new NoSuchElementException();
-            next = findNext(now);
-            return now.value;
+            // TODO
+            throw new NotImplementedError();
         }
-        //   Память: O(1)
-        //   Сложность: O(lgn)
-
 
         /**
          * Удаление предыдущего элемента
@@ -274,15 +227,10 @@ public class BinarySearchTree<T extends Comparable<T>> extends AbstractSet<T> im
          */
         @Override
         public void remove() {
-            if (now == null) throw new IllegalStateException();
-            BinarySearchTree.this.remove(now);
-            now = null;
+            // TODO
+            throw new NotImplementedError();
         }
     }
-    //     Память: O(1)
-    //     Сложность: O(lgn)
-
-
 
     /**
      * Подмножество всех элементов в диапазоне [fromElement, toElement)
