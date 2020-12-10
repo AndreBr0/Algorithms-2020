@@ -174,6 +174,26 @@ abstract class AbstractOpenAddressingSetTest {
                 )
             }
             println("All clear!")
+
+            // Тесты
+            val openAddressingSetTest = create<String>(random.nextInt(6) + 4)
+
+            val iteratorTest = openAddressingSetTest.iterator()
+
+            var stringtest = random.nextString("abcdefgh12345678", 1, 15)
+
+            toRemove = stringtest
+            openAddressingSetTest += stringtest
+            assertEquals(toRemove, iteratorTest.next())
+            iteratorTest.remove()
+            assertEquals(0, openAddressingSetTest.size)
+            stringtest = random.nextString("abcdefgh12345678", 1, 15)
+            openAddressingSetTest += stringtest
+            openAddressingSetTest.remove(stringtest)
+            assertEquals(0, openAddressingSetTest.size)
+            assertFalse {
+                openAddressingSetTest.remove(stringtest)
+            }
         }
     }
 }
